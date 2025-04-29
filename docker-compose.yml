@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://backend:8000/api
+    networks:
+      - weather-network
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    volumes:
+      - model-data:/app/models
+      # Mount local weather data if needed
+      # - ./data:/app/data:ro
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PATH=/app/models/weather_model_lstm.h5
+      - SCALER_PATH=/app/models/weather_scaler_temp.pkl
+      - CONFIG_PATH=/app/models/training_config.pkl
+      - SEQUENCE_PATH=/app/models/last_sequence.npy
+      # Add any API keys or other environment variables here
+      # - WEATHER_API_KEY=your_api_key_here
+    networks:
+      - weather-network
+    restart: unless-stopped
+
+networks:
+  weather-network:
+    driver: bridge
+
+volumes:
+  model-data:
+    # Persistent volume for trained models and artifacts

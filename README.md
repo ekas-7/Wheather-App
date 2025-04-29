@@ -116,6 +116,140 @@ weather-forecast-app/
    python train.py
    ```
    This will create the model files needed for prediction.
+# Docker Setup for Weather Forecast Application
+
+This document explains how to set up and run the Weather Forecast Application using Docker.
+
+## 📄 Docker Files
+
+The application includes three Docker configuration files:
+
+1. `backend/Dockerfile` - Container configuration for the Python ML backend
+2. `frontend/Dockerfile` - Container configuration for the React frontend
+3. `docker-compose.yml` - Orchestration of both services
+
+## 🚀 Running with Docker Compose
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+### Steps to Launch
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/weather-forecast-app.git
+   cd weather-forecast-app
+   ```
+
+2. Create the Docker containers and start the services:
+   ```bash
+   docker-compose up -d
+   ```
+
+3. Access the application:
+   - Frontend: http://localhost:80
+   - Backend API (when implemented): http://localhost:8000
+
+### Managing the Containers
+
+- View running containers:
+  ```bash
+  docker-compose ps
+  ```
+
+- View logs:
+  ```bash
+  docker-compose logs
+  # For a specific service:
+  docker-compose logs frontend
+  docker-compose logs backend
+  ```
+
+- Stop the services:
+  ```bash
+  docker-compose down
+  ```
+
+- Rebuild and restart containers (after changes):
+  ```bash
+  docker-compose up -d --build
+  ```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+The Docker setup supports several environment variables:
+
+#### Backend
+- `MODEL_PATH`: Path to trained ML model
+- `SCALER_PATH`: Path to data scaler
+- `CONFIG_PATH`: Path to training configuration
+- `SEQUENCE_PATH`: Path to last sequence data
+
+#### Frontend
+- `VITE_API_URL`: Backend API URL
+
+### Volumes
+
+The Docker setup uses volumes for data persistence:
+
+- `model-data`: Stores trained model files between container restarts
+
+### Docker Networks
+
+- `weather-network`: Internal network for service communication
+
+## 🧪 Production Considerations
+
+For production deployment, consider:
+
+1. Setting up proper SSL/TLS certificates
+2. Adding authentication for the backend API
+3. Implementing health checks
+4. Setting up a CI/CD pipeline for automated deployment
+5. Adding monitoring and logging solutions
+6. Modifying the nginx configuration for better performance
+
+## 🛠️ Troubleshooting
+
+### Common Issues
+
+1. **Port conflicts**: If ports 80 or 8000 are already in use on your machine, modify the port mappings in `docker-compose.yml`.
+
+2. **Memory issues during model training**: Increase Docker's allocated memory in Docker Desktop settings.
+
+3. **Permission issues with volumes**: Check file permissions on the host machine.
+
+### Checking Logs
+
+```bash
+# Check the last 100 lines of logs
+docker-compose logs --tail=100 backend
+```
+
+## 📝 Docker File Structure Updates
+
+Make sure to update your project structure to include the Docker files:
+
+```
+weather-forecast-app/
+├── backend/
+│   ├── Dockerfile          # Backend container configuration
+│   ├── requirements.txt
+│   └── train.py
+│
+├── frontend/
+│   ├── Dockerfile          # Frontend container configuration
+│   ├── public/
+│   ├── src/
+│   └── ...
+│
+├── docker-compose.yml      # Service orchestration
+└── README.md
+```
 
 ## 📊 ML Model Architecture
 
