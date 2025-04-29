@@ -1,0 +1,16 @@
+# Core ML & Data Handling
+numpy
+pandas
+scikit-learn
+tensorflow
+
+# API Framework & Server
+fastapi
+uvicorn[standard] # Includes standard extras like websockets, http tools
+
+# Model/Scaler Persistence
+joblib
+
+# Optional: For visualization during training/evaluation (in train.py)
+matplotlib
+seaborn
