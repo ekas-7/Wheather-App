@@ -2,7 +2,7 @@
 
 A full-stack weather forecasting application with an interactive React frontend and a machine learning-powered backend for predictive weather analytics.
 
-![Weather Dashboard](https://via.placeholder.com/800x400)
+
 
 ## 📋 Overview
 
